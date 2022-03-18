@@ -1,0 +1,19 @@
+.w-40 {
+	width: 40%;
+}
+
+.maxW {
+	max-width: 100%;
+}
+
+.cardContainer {
+	width: 20rem;
+	min-height: 70vh;
+	border: none;
+	border-radius: 0.5rem;
+	transition: all 0.7s ease-in-out;
+}
+
+.cardContainer:hover {
+	filter: drop-shadow(-2px 6px 6px rgba(105, 105, 105, 0.815));
+}

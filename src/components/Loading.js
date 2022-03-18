@@ -7,8 +7,8 @@ const Loading = () => {
 			autoplay
 			loop
 			mode="normal"
-			src="https://assets1.lottiefiles.com/packages/lf20_szlepvdh.json"
-			// style="width: 320px"
+			src="https://assets5.lottiefiles.com/packages/lf20_szlepvdh.json"
+			style={{ height: "50vh" }}
 		></lottie-player>
 	);
 };
