@@ -124,6 +124,7 @@ const CardInfo = () => {
 												<Button
 													variant="danger"
 													className="d-flex justify-content-between align-items-center w-40"
+													onClick={() => onDelete(index)}
 												>
 													<span>DELETE</span> <RiDeleteBin5Line size={19} />
 												</Button>
