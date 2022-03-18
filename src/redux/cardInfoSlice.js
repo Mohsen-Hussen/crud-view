@@ -10,7 +10,11 @@ const initState = { cardData: [], status: null };
 const cardInfoSlice = createSlice({
 	name: "cardInfo",
 	initialState: initState,
-	reducers: {},
+	reducers: {
+		getSingleCard: (state, action) => {
+			state.cardData.entries.Description = action.payload.Description;
+		},
+	},
 	extraReducers: {
 		[fetchCards.fulfilled]: (state, action) => {
 			state.cardData = action.payload;
