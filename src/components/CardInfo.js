@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "animate.css";
 import "../styles/CardInfo.css";
-import { Table, Button, Card, Row, Col } from "react-bootstrap";
+import { Table, Button, Card, Row, Col, Modal, Form } from "react-bootstrap";
 import { GoDiffAdded } from "react-icons/go";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -10,14 +10,13 @@ import { fetchCards } from "../redux/cardInfoSlice";
 import Loading from "./Loading";
 
 const CardInfo = () => {
+	const inputRef = useRef();
 	const dispatch = useDispatch();
 	const cardStatus = useSelector((state) => state.cardInfo.status);
 	const singleCardInfo = useSelector(
 		(state) => state.cardInfo.cardData.entries
 	);
 	const singleInfoCardsArr = Object.values(singleCardInfo);
-	// console.log("status", cardStatus);
-	// console.log("data from calling api", singleCardInfo);
 
 	// pagenation function => that s;lice the api array
 	const paginate = (array, page_size, page_number) => {
@@ -28,20 +27,22 @@ const CardInfo = () => {
 	// state to save the data we will map it
 	const [currentPage, setCurrentPage] = useState(1);
 	const [data, setData] = useState([]);
+	// state to catch input value
+	const [inputValue, setInputValue] = useState("");
 
-	// function will be fired once to get 42 card
+	// function will be fired once to get 6 card
 	useEffect(() => {
 		if (singleInfoCardsArr.length && currentPage === 1) {
-			const subArr = paginate(singleInfoCardsArr, 42, 1);
+			const subArr = paginate(singleInfoCardsArr, 6, 1);
 			setData(subArr);
 			setCurrentPage(currentPage + 1);
 		}
 	}, [singleInfoCardsArr, currentPage]);
 
-	//function will fired when add new cards => pagenation add button
+	//function will fired when add new card => pagenation add button
 	const onChangePage = () => {
 		console.log({ currentPage });
-		const pagentatedArray = paginate(singleInfoCardsArr, 40, currentPage);
+		const pagentatedArray = paginate(singleInfoCardsArr, 1, currentPage);
 		setData([...data, ...pagentatedArray]);
 		setCurrentPage(currentPage + 1);
 		console.log(pagentatedArray);
@@ -67,6 +68,23 @@ const CardInfo = () => {
 		});
 		console.log({ dataUpdated });
 		setData(dataUpdated);
+	};
+	// isEdit state
+	const [isEdit, setIsEdit] = useState(false);
+	// toggle State
+	const toggleIsEditState = () => {
+		setIsEdit(!isEdit);
+	};
+	// update description
+	const updateNewDesc = (index, value) => {
+		let newData = [...singleInfoCardsArr];
+		let finalDesc = newData[index];
+		let result = Object.assign({}, finalDesc);
+		console.log(result);
+		result.Description = value;
+		console.log("result", result.Description);
+		setData(newData);
+		console.log("data from state", data);
 	};
 
 	//calling api
@@ -103,8 +121,63 @@ const CardInfo = () => {
 									<Card className="cardContainer animate__animated animate__zoomInDown">
 										<Card.Body className="d-flex justify-content-between align-items-center flex-column">
 											<Card.Title>Api : {cardData.API}</Card.Title>
-											<Card.Text className="maxW">
-												Description : {cardData.Description}
+											<Card.Text className="maxW d-flex justify-content-between align-items-center">
+												{isEdit ? (
+													<Form
+														onSubmit={(e) => {
+															e.preventDefault();
+															updateNewDesc(index, inputValue);
+															toggleIsEditState();
+														}}
+													>
+														<input
+															type="text"
+															defaultValue={cardData.Description}
+															ref={inputRef}
+															value={inputValue}
+															onChange={(e) => setInputValue(e.target.value)}
+														/>
+														<Button onClick={() => updateNewDesc(index)}>
+															Update
+														</Button>
+													</Form>
+												) : (
+													<>
+														<div>Description : {cardData.Description}</div>
+														<div>
+															<Button
+																variant="success"
+																className="d-flex justify-content-between align-items-center w-40"
+																onClick={() => toggleIsEditState()}
+															>
+																<span className="ml-2">UPDATE</span>
+																<FiEdit size={19} />
+															</Button>
+														</div>
+													</>
+												)}
+												{/* <div>
+													<Button
+														variant="success"
+														className="d-flex justify-content-between align-items-center w-40"
+														onClick={() => toggleIsEditState()}
+														onClick={() => {
+															const newItem = {
+																API: "MY UPDATED",
+																Auth: "HMADA",
+																Category: "Anime MOHAMED",
+																Cors: "unknown",
+																Description: "TEST UPDATE",
+																HTTPS: false,
+																Link: "https://myanimelist.net/clubs.php?cid=13727",
+															};
+															onUpdate(newItem, index);
+														}}
+													>
+														<span className="ml-2">UPDATE</span>
+														<FiEdit size={19} />
+													</Button>
+												</div> */}
 											</Card.Text>
 											<Card.Text>Auth : {cardData.Auth}</Card.Text>
 											<Card.Text>HTTPS : {cardData.HTTPS.toString()}</Card.Text>
@@ -114,13 +187,25 @@ const CardInfo = () => {
 											</Card.Text>
 											<Card.Text>Category : {cardData.Category}</Card.Text>
 											<div className="d-flex justify-content-between align-items-center w-100">
-												<Button
+												{/* <Button
 													variant="success"
 													className="d-flex justify-content-between align-items-center w-40"
+													onClick={() => {
+														const newItem = {
+															API: "MY UPDATED",
+															Auth: "HMADA",
+															Category: "Anime MOHAMED",
+															Cors: "unknown",
+															Description: "TEST UPDATE",
+															HTTPS: false,
+															Link: "https://myanimelist.net/clubs.php?cid=13727",
+														};
+														onUpdate(newItem, index);
+													}}
 												>
-													<div className="ml-2">UPDATE</div>{" "}
+													<span className="ml-2">UPDATE</span>
 													<FiEdit size={19} />
-												</Button>
+												</Button> */}
 												<Button
 													variant="danger"
 													className="d-flex justify-content-between align-items-center w-40"
@@ -138,71 +223,6 @@ const CardInfo = () => {
 					<Loading />
 				)}
 			</div>
-			{cardStatus === "success" ? (
-				<Table
-					striped
-					hover
-					responsive
-					variant="dark"
-					className="animate__animated animate__fadeInUp"
-				>
-					<thead>
-						<tr className="hide-border">
-							<th>API</th>
-							<th>Description</th>
-							<th>Auth</th>
-							<th>HTTPS</th>
-							<th>Cors</th>
-							<th>Link</th>
-							<th>Category</th>
-							<th>Operation</th>
-						</tr>
-					</thead>
-					<tbody className="animate__animated animate__fadeInUp animate__delay-1s">
-						{data &&
-							data.map((cardData, index) => (
-								<tr className="hide-border" key={index}>
-									<td>{cardData.API}</td>
-									<td>{cardData.Description}</td>
-									<td>{cardData.Auth}</td>
-									<td>{cardData.HTTPS}</td>
-									<td>{cardData.Cors}</td>
-									<td>{cardData.Link}</td>
-									<td>{cardData.Category}</td>
-									<td>
-										<div className="d-flex justify-content-between align-items-center">
-											<Button variant="primary" onClick={() => onChangePage()}>
-												<GoDiffAdded />
-											</Button>
-											<Button
-												variant="success"
-												onClick={() => {
-													const newItem = {
-														API: "MY UPDATED",
-														Auth: "HMADA",
-														Category: "Anime MOHAMED",
-														Cors: "unknown",
-														Description: "TEST UPDATE",
-														HTTPS: false,
-														Link: "https://myanimelist.net/clubs.php?cid=13727",
-													};
-													onUpdate(newItem, index);
-												}}
-											>
-												<FiEdit />
-											</Button>
-											<Button variant="danger" onClick={() => onDelete(index)}>
-												<RiDeleteBin5Line />
-											</Button>
-										</div>
-									</td>
-								</tr>
-							))}
-					</tbody>
-				</Table>
-			) : (
-				<h1>loading test</h1>
-			)}
 		</>
 	);
 };
