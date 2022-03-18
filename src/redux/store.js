@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cardInfoReducer from "./cardInfoSlice"
+import rowInfoReducer from "./rowInfoSlice"
 
 const store = configureStore({
 	reducer: {
-		cardInfo: cardInfoReducer,
+		rowInfo: rowInfoReducer,
 	},
 });
 
