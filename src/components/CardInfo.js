@@ -44,6 +44,7 @@ const CardInfo = () => {
 		const pagentatedArray = paginate(singleInfoCardsArr, 40, currentPage);
 		setData([...data, ...pagentatedArray]);
 		setCurrentPage(currentPage + 1);
+		console.log(pagentatedArray);
 	};
 
 	// function will be fired when card deleted
@@ -78,6 +79,18 @@ const CardInfo = () => {
 			<div>
 				{cardStatus === "success" ? (
 					<Row className="d-flex flex-wrap w-100 text-center">
+						<Col xs="12">
+							<div className="d-flex justify-content-center align-items-center mb-3">
+								<Button
+									variant="primary"
+									className="d-flex justify-content-between align-items-center w-50"
+									onClick={() => onChangePage()}
+								>
+									<span className="addBtn">Add Cards</span>
+									<GoDiffAdded size={25} />
+								</Button>
+							</div>
+						</Col>
 						{data &&
 							data.map((cardData, index) => (
 								<Col
@@ -105,26 +118,20 @@ const CardInfo = () => {
 													variant="success"
 													className="d-flex justify-content-between align-items-center w-40"
 												>
-													<div className="ml-2">UPDATE</div> <FiEdit />
+													<div className="ml-2">UPDATE</div>{" "}
+													<FiEdit size={19} />
 												</Button>
 												<Button
 													variant="danger"
 													className="d-flex justify-content-between align-items-center w-40"
 												>
-													<span>DELETE</span> <RiDeleteBin5Line />
+													<span>DELETE</span> <RiDeleteBin5Line size={19} />
 												</Button>
 											</div>
 										</Card.Body>
 									</Card>
 								</Col>
 							))}
-						<Col xs="12">
-							<div>
-								<Button variant="primary" onClick={() => onChangePage()}>
-									<GoDiffAdded />
-								</Button>
-							</div>
-						</Col>
 					</Row>
 				) : (
 					<Loading />

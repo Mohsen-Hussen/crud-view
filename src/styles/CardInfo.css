@@ -6,6 +6,10 @@
 	max-width: 100%;
 }
 
+.addBtn {
+	font-size: 2rem;
+}
+
 .cardContainer {
 	width: 20rem;
 	min-height: 70vh;
