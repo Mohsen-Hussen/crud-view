@@ -5,7 +5,7 @@
 
 <p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=mohsen-hussen" alt="mohsen-hussen" /></a> </p>
 
-<p align="left"> <a href="https://twitter.com/boxenhussen" target="blank"><img src="https://img.shields.io/twitter/follow/boxenhussen?logo=twitter&style=for-the-badge" alt="boxenhussen" /></a> </p>
+<p align="left"> <a href="https://twitter.com/boxenhussen" target="_blank"><img src="https://img.shields.io/twitter/follow/boxenhussen?logo=twitter&style=for-the-badge" alt="boxenhussen" /></a> </p>
 
 - 🔭 I’m currently working on **CRUD App**
 
@@ -15,8 +15,8 @@
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
-<a href="https://twitter.com/boxenhussen" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="boxenhussen" height="30" width="40" /></a>
-<a href="https://linkedin.com/in/https://www.linkedin.com/in/mohsen-hussein/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="https://www.linkedin.com/in/mohsen-hussein/" height="30" width="40" /></a>
+<a href="https://twitter.com/BoxenHussen" target="_blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="boxenhussen" height="30" width="40" /></a>
+<a href="https://www.linkedin.com/in/mohsen-hussein/" target="_blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="https://www.linkedin.com/in/mohsen-hussein/" height="30" width="40" /></a>
 </p>
 
 <h3 align="left">Languages and Tools:</h3>
