@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "animate.css";
 import "../styles/CardInfo.css";
-import { Table, Button, Card, Row, Col, Modal, Form } from "react-bootstrap";
+import { Button, Card, Row, Col } from "react-bootstrap";
 import { GoDiffAdded } from "react-icons/go";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -10,9 +10,10 @@ import { fetchCards } from "../redux/cardInfoSlice";
 import Loading from "./Loading";
 
 const CardInfo = () => {
-	const inputRef = useRef();
 	const dispatch = useDispatch();
+	//get state from redux
 	const cardStatus = useSelector((state) => state.cardInfo.status);
+	// get entries from state
 	const singleCardInfo = useSelector(
 		(state) => state.cardInfo.cardData.entries
 	);
@@ -27,13 +28,11 @@ const CardInfo = () => {
 	// state to save the data we will map it
 	const [currentPage, setCurrentPage] = useState(1);
 	const [data, setData] = useState([]);
-	// state to catch input value
-	const [inputValue, setInputValue] = useState("");
 
 	// function will be fired once to get 6 card
 	useEffect(() => {
 		if (singleInfoCardsArr.length && currentPage === 1) {
-			const subArr = paginate(singleInfoCardsArr, 6, 1);
+			const subArr = paginate(singleInfoCardsArr, 1, 1);
 			setData(subArr);
 			setCurrentPage(currentPage + 1);
 		}
@@ -68,23 +67,6 @@ const CardInfo = () => {
 		});
 		console.log({ dataUpdated });
 		setData(dataUpdated);
-	};
-	// isEdit state
-	const [isEdit, setIsEdit] = useState(false);
-	// toggle State
-	const toggleIsEditState = () => {
-		setIsEdit(!isEdit);
-	};
-	// update description
-	const updateNewDesc = (index, value) => {
-		let newData = [...singleInfoCardsArr];
-		let finalDesc = newData[index];
-		let result = Object.assign({}, finalDesc);
-		console.log(result);
-		result.Description = value;
-		console.log("result", result.Description);
-		setData(newData);
-		console.log("data from state", data);
 	};
 
 	//calling api
@@ -122,62 +104,7 @@ const CardInfo = () => {
 										<Card.Body className="d-flex justify-content-between align-items-center flex-column">
 											<Card.Title>Api : {cardData.API}</Card.Title>
 											<Card.Text className="maxW d-flex justify-content-between align-items-center">
-												{isEdit ? (
-													<Form
-														onSubmit={(e) => {
-															e.preventDefault();
-															updateNewDesc(index, inputValue);
-															toggleIsEditState();
-														}}
-													>
-														<input
-															type="text"
-															defaultValue={cardData.Description}
-															ref={inputRef}
-															value={inputValue}
-															onChange={(e) => setInputValue(e.target.value)}
-														/>
-														<Button onClick={() => updateNewDesc(index)}>
-															Update
-														</Button>
-													</Form>
-												) : (
-													<>
-														<div>Description : {cardData.Description}</div>
-														<div>
-															<Button
-																variant="success"
-																className="d-flex justify-content-between align-items-center w-40"
-																onClick={() => toggleIsEditState()}
-															>
-																<span className="ml-2">UPDATE</span>
-																<FiEdit size={19} />
-															</Button>
-														</div>
-													</>
-												)}
-												{/* <div>
-													<Button
-														variant="success"
-														className="d-flex justify-content-between align-items-center w-40"
-														onClick={() => toggleIsEditState()}
-														onClick={() => {
-															const newItem = {
-																API: "MY UPDATED",
-																Auth: "HMADA",
-																Category: "Anime MOHAMED",
-																Cors: "unknown",
-																Description: "TEST UPDATE",
-																HTTPS: false,
-																Link: "https://myanimelist.net/clubs.php?cid=13727",
-															};
-															onUpdate(newItem, index);
-														}}
-													>
-														<span className="ml-2">UPDATE</span>
-														<FiEdit size={19} />
-													</Button>
-												</div> */}
+												<div>Description : {cardData.Description}</div>
 											</Card.Text>
 											<Card.Text>Auth : {cardData.Auth}</Card.Text>
 											<Card.Text>HTTPS : {cardData.HTTPS.toString()}</Card.Text>
@@ -187,25 +114,25 @@ const CardInfo = () => {
 											</Card.Text>
 											<Card.Text>Category : {cardData.Category}</Card.Text>
 											<div className="d-flex justify-content-between align-items-center w-100">
-												{/* <Button
+												<Button
 													variant="success"
 													className="d-flex justify-content-between align-items-center w-40"
 													onClick={() => {
 														const newItem = {
-															API: "MY UPDATED",
-															Auth: "HMADA",
-															Category: "Anime MOHAMED",
-															Cors: "unknown",
-															Description: "TEST UPDATE",
-															HTTPS: false,
-															Link: "https://myanimelist.net/clubs.php?cid=13727",
+															API: "MY UPDATED API",
+															Auth: "MY UPDATED AUTH",
+															Category: "MY UPDATED CATEGORY",
+															Cors: "MY UPDATED CORS",
+															Description: "MY UPDATED DESCRIPTION",
+															HTTPS: true,
+															Link: "MY UPDATED LINK",
 														};
 														onUpdate(newItem, index);
 													}}
 												>
 													<span className="ml-2">UPDATE</span>
 													<FiEdit size={19} />
-												</Button> */}
+												</Button>
 												<Button
 													variant="danger"
 													className="d-flex justify-content-between align-items-center w-40"
