@@ -29,7 +29,7 @@ const CardInfo = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [data, setData] = useState([]);
 
-	// function will be fired once to get 6 card
+	// function will be fired once to get 1 card
 	useEffect(() => {
 		if (singleInfoCardsArr.length && currentPage === 1) {
 			const subArr = paginate(singleInfoCardsArr, 1, 1);
